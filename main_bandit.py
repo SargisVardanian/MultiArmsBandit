@@ -23,21 +23,21 @@ bandit_probabilities = generate_data(args.n, args.n_arms, args.loc, args.scale)
 if not os.path.exists('my_plots'):
     os.makedirs('my_plots')
 
-# for i in ['EpsilonGreedy', 'SoftMax', 'UCB', 'ThompsonSampling']:
-#     ex = BanditExperiment(args.n_arms, bandit_probabilities, args.n, method=i)
-#     if i == 'EpsilonGreedy':
-#         ex.plot()
-#         ex.save_plots(os.path.join('my_plots', 'EpsilonGreedy.pdf'))
-#     elif i == 'SoftMax':
-#         ex.plot()
-#         ex.save_plots(os.path.join('my_plots', 'SoftMax.pdf'))
-#     elif i == 'UCB':
-#         ex.plot()
-#         ex.save_plots(os.path.join('my_plots', 'UCB.pdf'))
-#     else:
-#         ex.plot()
-#         ex.save_plots(os.path.join('my_plots', 'ThompsonSampling.pdf'))
-#     print(i)
+for i in ['EpsilonGreedy', 'SoftMax', 'UCB', 'ThompsonSampling']:
+    ex = BanditExperiment(args.n_arms, bandit_probabilities, args.n, method=i)
+    if i == 'EpsilonGreedy':
+        ex.plot()
+        ex.save_plots(os.path.join('my_plots', 'EpsilonGreedy.pdf'))
+    elif i == 'SoftMax':
+        ex.plot()
+        ex.save_plots(os.path.join('my_plots', 'SoftMax.pdf'))
+    elif i == 'UCB':
+        ex.plot()
+        ex.save_plots(os.path.join('my_plots', 'UCB.pdf'))
+    else:
+        ex.plot()
+        ex.save_plots(os.path.join('my_plots', 'ThompsonSampling.pdf'))
+    print(i)
 
 
 tab = Tab(bandit_probabilities, ['EpsilonGreedy', 'SoftMax', 'UCB', 'ThompsonSampling'])

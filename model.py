@@ -41,7 +41,6 @@ class BanditExperiment:
             epsilon = self.examine_EG()[1][0]
             ep = EpsilonGreedy(self.n, self.n_arms, epsilon)
             caleg = ep.calculate_metrics_forEG(self.bandit_probabilities)
-            print("calegcaleg", caleg)
             return caleg
         elif self.method == 'SoftMax':
             temperature = self.examine_SF()[1][0]

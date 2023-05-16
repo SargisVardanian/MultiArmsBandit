@@ -27,17 +27,19 @@ class EpsilonGreedy:
         self.arm_values[arm] = ((n - 1) / n) * value + (1 / n) * reward
 
     def calculate_metrics_forEG(self, bandit_probabilities):
+        rewards = np.zeros(self.n)
         optimal_action = np.argmax(np.mean(bandit_probabilities, axis=1))
         action_counts = np.zeros(self.n_arms)
         for i in range(self.n):
             arm = self.choose_arms()
+            action_counts[arm] += 1
             self.update(arm, bandit_probabilities[arm][i])
-            self.rewards[i] = bandit_probabilities[arm][i]
-            self.cumulative_rewards[i] = np.sum(self.rewards)
-            self.optimal_action_percentages[i] = 100 * np.sum(action_counts[optimal_action]) / (i + 1)
+            rewards[i] = bandit_probabilities[arm][i]
+        cumulative_rewards = np.cumsum(rewards)
+        mean_rewards = cumulative_rewards / (np.arange(self.n) + 1)
         optimal_action_percent = 100 * np.sum(action_counts[optimal_action]) / self.n
-        self.losses = np.abs(optimal_action_percent - self.rewards[i])
-        return np.mean(self.rewards), self.cumulative_rewards[-1], np.sum(self.losses)
+        loss = np.abs(optimal_action_percent - 100)
+        return np.mean(mean_rewards), np.sum(rewards), loss
 
 class SoftmaxBandit:
     def __init__(self, n, n_arms, temperature=1.0):
